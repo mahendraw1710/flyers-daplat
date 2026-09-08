@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/kerberos.html",
+      "destination": "/kerberos/kerberos.html"
+    }
+  ]
+}
