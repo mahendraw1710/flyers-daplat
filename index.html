@@ -223,6 +223,15 @@
     color: #ff7a45;
   }
 
+  .hapus{
+    text-decoration: none;
+    color: #333333;
+  }
+  .hapus:hover{
+    color: #0056b3;
+    text-decoration: underline;
+  }
+
   a.subject-tag:hover{ filter: brightness(0.97); }
   a.subject-tag{ text-decoration:none; cursor:pointer; }
   :focus-visible{ outline: 2px solid var(--orange-deep); outline-offset: 2px; }
@@ -259,7 +268,7 @@
 
     <div class="card">
       <div class="icon-circle">🔒</div>
-      <h3>Kerberos  <a href="/kerberos.html">Klik for more detail</a></h3>
+      <h3>Kerberos  <a href="/kerberos.html" class='hapus'>[Klik for more detail]</a></h3>
       <p>Gagal autentikasi, Kerberos unauthorized, atau tidak bisa login ke platform.</p>
       <div class="subject-tag">[Kerberos Login] – Nama/Username</div>
       <!-- <a class="subject-tag" href="mailto:?subject=%5BKerberos%20Login%5D%20-%20Nama%2FUsername">[Kerberos Login] – Nama/Username</a> -->
