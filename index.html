@@ -217,6 +217,10 @@
     max-width: 640px;
     margin: 0 auto;
   }
+  /* COLOR */
+  .color1 {
+    color: #ff7a45;
+  }
 
   a.subject-tag:hover{ filter: brightness(0.97); }
   a.subject-tag{ text-decoration:none; cursor:pointer; }
@@ -234,7 +238,7 @@
 
   <span class="badge">Data Platform Support – Lakehouse</span>
 
-  <h1>Ada Kendala di Lakehouse?<br>Yuk Submit Tiketnya Dulu</h1>
+  <h1>Ada Kendala di Lakehouse?<br>Yuk <div class="color1">Submit Tiketnya</div> Dulu</h1>
   <p class="lede">Biar process nya cepet, cek dulu kategori kendala kamu dibawah ini dan pakai format subject yang sesuai.</p>
 
   <div class="tip">
@@ -248,28 +252,32 @@
       <div class="icon-circle">🔑</div>
       <h3>Reset Password</h3>
       <p>Lupa password, mau ganti password Hetu/Spark, atau password perlu direset ulang.</p>
-      <a class="subject-tag" href="mailto:?subject=%5BReset%20Password%5D%20-%20Nama%2FUsername">[Reset Password] – Nama/Username</a>
+      <div class="subject-tag">[Reset Password] – Nama/Username</div>
+      <!-- <a class="subject-tag" href="mailto:?subject=%5BReset%20Password%5D%20-%20Nama%2FUsername">[Reset Password] – Nama/Username</a> -->
     </div>
 
     <div class="card">
       <div class="icon-circle">🔒</div>
       <h3>Kerberos</h3>
       <p>Gagal autentikasi, Kerberos unauthorized, atau tidak bisa login ke platform.</p>
-      <a class="subject-tag" href="mailto:?subject=%5BKerberos%20Login%5D%20-%20Nama%2FUsername">[Kerberos Login] – Nama/Username</a>
+      <div class="subject-tag">[Kerberos Login] – Nama/Username</div>
+      <!-- <a class="subject-tag" href="mailto:?subject=%5BKerberos%20Login%5D%20-%20Nama%2FUsername">[Kerberos Login] – Nama/Username</a> -->
     </div>
 
     <div class="card">
       <div class="icon-circle">&lt;/&gt;</div>
       <h3>Kendala Query dan Job</h3>
       <p>Query dan Job jalan lama, macet, atau perlu dibantu kill pada process yang gantung.</p>
-      <a class="subject-tag" href="mailto:?subject=%5BQuery%20Lambat%5D%20-%20Nama%2FUsername">[Query Lambat] – Nama/Username</a>
+      <div class="subject-tag">[Query Lambat] – Nama/Username</div>
+      <!-- <a class="subject-tag" href="mailto:?subject=%5BQuery%20Lambat%5D%20-%20Nama%2FUsername">[Query Lambat] – Nama/Username</a> -->
     </div>
 
     <div class="card">
       <div class="icon-circle">🌐</div>
       <h3>Connection Setup</h3>
       <p>Connection belum muncul di management center, atau gagal create engine baru.</p>
-      <a class="subject-tag" href="mailto:?subject=%5BConnection%20Setup%5D%20-%20Nama%2FUsername">[Connection Setup] – Nama/Username</a>
+      <div class="subject-tag">[Connection Setup] – Nama/Username</div>
+      <!-- <a class="subject-tag" href="mailto:?subject=%5BConnection%20Setup%5D%20-%20Nama%2FUsername">[Connection Setup] – Nama/Username</a> -->
     </div>
 
   </div>
@@ -311,7 +319,7 @@
     <div class="access-card">
       <h4>Form Reactivate Revoked Access</h4>
       <p>Untuk aktivasi ulang akses yang sudah dicabut. Perlu email ke PIC terkait, cek internal.</p>
-      <a href="#" target="_blank" rel="noopener">[Form Request]</a>
+      <a href="https://tsel.id/Request-Lakehouse-Access" target="_blank" rel="noopener">[Form Request]</a>
     </div>
 
   </div>
