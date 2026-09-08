@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kerberos Troubleshooting – HetuEngine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FAF1E7;
+    --card: #FFFFFF;
+    --ink: #1D1B18;
+    --ink-soft: #59544C;
+    --orange: #F0692C;
+    --orange-deep: #D6531D;
+    --peach: #FBDCC3;
+    --peach-soft: #FCE8D3;
+    --tan-panel: #EFE7DB;
+    --tag-bg: #FCEACB;
+    --tag-ink: #C9601A;
+    --line: #ECE0D2;
+    --green: #3E8B5C;
+    --green-bg: #E4F1E7;
+    --red: #C2452D;
+    --red-bg: #FBE6DF;
+  }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1,h2,h3, .badge, .step-num{ font-family: 'Poppins', 'Inter', sans-serif; }
 
+  .wrap{
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 24px 40px;
+  }
+
+  /* Hero */
+  .badge{
+    display:inline-block;
+    background: var(--orange);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 10px 22px;
+    border-radius: 999px;
+    margin-bottom: 26px;
+  }
+  h1{
+    font-size: clamp(26px, 4vw, 38px);
+    line-height: 1.22;
+    font-weight: 700;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .lede{
+    font-size: 16.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 62ch;
+    margin: 0 0 32px;
+  }
+
+  /* Solusi flow bar */
+  .flowbar{
+    background: #fff;
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: 0 1px 0 var(--line);
+    margin-bottom: 44px;
+  }
+  .flowbar-label{
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--orange-deep);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: 14px;
+  }
+  .flow-steps{
+    display:flex;
+    align-items:center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .flow-pill{
+    background: var(--tag-bg);
+    color: var(--tag-ink);
+    font-weight: 600;
+    font-size: 14px;
+    padding: 10px 18px;
+    border-radius: 10px;
+  }
+  .flow-arrow{
+    color: var(--orange);
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  h2{
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0 0 20px;
+  }
+  .section-block{ margin-bottom: 48px; }
+
+  /* Numbered stage cards */
+  .stage-card{
+    background: var(--card);
+    border-radius: 18px;
+    padding: 26px 28px 22px;
+    box-shadow: 0 1px 0 var(--line);
+    margin-bottom: 20px;
+  }
+  .stage-head{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin-bottom: 18px;
+  }
+  .stage-num{
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--orange);
+    color:#fff;
+    font-weight: 700;
+    font-size: 16px;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+  }
+  .stage-head h3{
+    margin:0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+  ol.step-list{
+    margin: 0;
+    padding-left: 22px;
+    font-size: 15px;
+    color: var(--ink);
+    line-height: 2;
+  }
+  ol.step-list li{ padding-left: 4px; }
+
+  .note{
+    display:flex;
+    gap: 10px;
+    align-items:flex-start;
+    background: var(--peach-soft);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13.5px;
+    color: var(--orange-deep);
+    font-weight: 500;
+    margin-top: 14px;
+  }
+  .note .dot{ font-size: 14px; line-height: 1.4; }
+
+  /* Outcome */
+  .outcome-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 22px 0 8px;
+  }
+  .outcome-card{
+    border-radius: 16px;
+    padding: 18px 20px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .outcome-card.success{ background: var(--green-bg); color: var(--green); }
+  .outcome-card.fail{ background: var(--red-bg); color: var(--red); }
+  .outcome-card strong{ display:block; font-size: 15px; margin-bottom: 4px; }
+
+  /* Escalation cards */
+  .access-lede{
+    font-size: 15px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    max-width: 60ch;
+    margin: 0 0 22px;
+  }
+  .access-grid{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .access-card{
+    background: #fff;
+    border: 1.5px dashed #E8A46B;
+    border-radius: 16px;
+    padding: 24px 22px;
+  }
+  .access-card h4{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .access-card > a.form-link{
+    display:inline-block;
+    color: var(--orange-deep);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    margin-bottom: 14px;
+  }
+  .access-card > a.form-link:hover{ text-decoration: underline; }
+  .field-list{
+    margin:0;
+    padding:0;
+    list-style:none;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+  }
+  .field-list li{
+    display:flex;
+    align-items:center;
+    gap: 8px;
+    padding: 6px 0;
+    border-top: 1px solid var(--line);
+  }
+  .field-list li:first-child{ border-top:none; }
+  .field-list li::before{
+    content:'';
+    width: 6px; height:6px;
+    border-radius:50%;
+    background: var(--orange);
+    flex-shrink:0;
+  }
+  .access-card p.info{
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height:1.5;
+    margin-top: 12px;
+  }
+
+  footer{
+    text-align:center;
+    color: #9C948A;
+    font-size: 14px;
+    line-height: 1.6;
+    padding: 24px 24px 8px;
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  :focus-visible{ outline: 2px solid var(--orange-deep); outline-offset: 2px; }
+
+  @media (max-width: 680px){
+    .outcome-grid, .access-grid{ grid-template-columns: 1fr; }
+    .wrap{ padding: 40px 18px 32px; }
+    .stage-card{ padding: 22px 20px 18px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <span class="badge">Kerberos Login</span>
+
+  <h1>Flow Handling Error Kerberos di HetuEngine</h1>
+  <p class="lede">Error saat Test Connection atau Running Query.</p>
+
+  <div class="flowbar">
+    <div class="flowbar-label">Solusi</div>
+    <div class="flow-steps">
+      <span class="flow-pill">Modify Password FIM</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-pill">Update DataArts</span>
+      <span class="flow-arrow">→</span>
+      <span class="flow-pill">Jalankan Query Kembali</span>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <div class="stage-card">
+      <div class="stage-head">
+        <span class="stage-num">1</span>
+        <h3>Modify Password FIM</h3>
+      </div>
+      <ol class="step-list">
+        <li>Buka Huawei Cloud Console</li>
+        <li>Masuk ke Service MRS</li>
+        <li>Pilih MRS-ETL-Spark</li>
+        <li>Buka Access Manager</li>
+        <li>Pilih Direct Connect</li>
+        <li>Zoom Out ±80% (jika diperlukan)</li>
+        <li>Klik Username di pojok kanan atas</li>
+        <li>Pilih Change Password</li>
+        <li>Input Current Password</li>
+        <li>Input New Password</li>
+        <li>Klik OK</li>
+      </ol>
+      <div class="note"><span class="dot">💡</span><span>Pastikan password FIM berhasil diperbarui sebelum lanjut ke DataArts.</span></div>
+    </div>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <span class="stage-num">2</span>
+        <h3>Update Password pada Connection DataArts</h3>
+      </div>
+      <ol class="step-list">
+        <li>Buka Huawei Cloud Console</li>
+        <li>Masuk ke Service DataArts</li>
+        <li>Buka Management Center</li>
+        <li>Search Connection</li>
+        <li>Klik Edit</li>
+        <li>Scroll ke bagian credential</li>
+        <li>Update Username (CASE SENSITIVE)</li>
+        <li>Update Password menggunakan Password FIM terbaru</li>
+        <li>Test Connection</li>
+      </ol>
+      <div class="note"><span class="dot">💡</span><span>Jika Failed: cek username, password, dan typo. Jika Success: klik Save.</span></div>
+    </div>
+
+    <div class="stage-card">
+      <div class="stage-head">
+        <span class="stage-num">3</span>
+        <h3>Jalankan Query Kembali di HetuEngine</h3>
+      </div>
+      <p style="margin:0 0 4px; font-size:15px; color: var(--ink-soft);">Jalankan query kembali di HetuEngine.</p>
+      <div class="outcome-grid">
+        <div class="outcome-card success"><strong>✅ Jika Success</strong>Issue resolved.</div>
+        <div class="outcome-card fail"><strong>⚠️ Jika Failed</strong>Lanjutkan ke Troubleshooting di bawah.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-block">
+    <h2>Troubleshooting</h2>
+    <div class="stage-card" style="margin-bottom:0;">
+      <ol class="step-list">
+        <li>Re-check Password FIM Terbaru</li>
+        <li>Verifikasi Username pada Connection MRS/DataArts</li>
+        <li>Jalankan Test Connection DataArts Kembali</li>
+      </ol>
+      <div class="note"><span class="dot">⚠️</span><span>Jika masih gagal, eskalasi ke Tim Admin.</span></div>
+    </div>
+  </div>
+
+  <div class="section-block" style="margin-bottom: 24px;">
+    <h2>Escalation Supporting Information</h2>
+    <p class="access-lede">Kalau langkah di atas masih belum menyelesaikan kendala, submit ke tim lewat form di bawah dan pantau statusnya lewat tracking list.</p>
+
+    <div class="access-grid">
+      <div class="access-card">
+        <h4>Form Troubleshooting</h4>
+        <a class="form-link" href="https://365tsel.sharepoint.com/:l:/s/LakehouseTroubleshooting/JAAqYQMxsJvpRp1fXtlAl8AYAah-s6xqrrjMwEYJhiR1Pag?nav=NjEyMmRiMjMtN2Q1OS00OWFkLTg1NzctNDgxOTJiNDExZGI3" target="_blank" rel="noopener">Submit Form →</a>
+        <ul class="field-list">
+          <li>Screenshot Error</li>
+          <li>Nama Connection</li>
+          <li>Username</li>
+          <li>Waktu Kejadian</li>
+        </ul>
+      </div>
+
+      <div class="access-card">
+        <h4>Tracking List Troubleshooting</h4>
+        <a class="form-link" href="https://365tsel.sharepoint.com/:l:/s/LakehouseTroubleshooting/JAAqYQMxsJvpRp1fXtlAl8AYAb9q9XKDdebIXS6j514f9lI?e=7Z8tcq" target="_blank" rel="noopener">Lihat Tracking List →</a>
+        <p class="info">Status tiket akan diinformasikan lewat workflow chat Teams beserta ID tiketnya.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Tiket diproses sesuai antrian yang masuk. Mohon ditunggu ya, dan jangan lupa infokan nomor ID tiket setelah submit.<br>
+    Daplat Support Team
+  </footer>
+
+</div>
+
+</body>
+</html>
